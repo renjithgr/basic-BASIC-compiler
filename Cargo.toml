@@ -1,5 +1,5 @@
 [package]
-name = "basic-BASIC-compiler"
+name = "basic_basic_compiler"
 version = "0.1.0"
 authors = ["Renjith <grenjithr@gmail.com>"]
 edition = "2018"
