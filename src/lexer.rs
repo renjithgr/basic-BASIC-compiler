@@ -1,5 +1,6 @@
 #[derive(Debug, PartialEq)]
 pub enum Token {
+    // Operators
     PLUS,
     MINUS,
     ASTERISK,
@@ -11,6 +12,20 @@ pub enum Token {
     EQ,
     EQEQ,
     NOTEQ,
+    // Keywords
+    LABEL,
+    GOTO,
+    PRINT,
+    INPUT,
+    LET,
+    IF,
+    THEN,
+    ENDIF,
+    WHILE,
+    REPEAT,
+    ENDWHILE,
+    // Other stuff
+    String(String),
     NEWLINE,
 }
 
@@ -55,12 +70,31 @@ fn get_tokens(input: &str) -> Vec<Token> {
                 Some(c) => panic!(format!("Expected !=, got !{}", c)),
                 None => panic!("Expected !=, got nothing".to_string()),
             },
+            '"' => {
+                let mut value = String::new();
+
+                while let Some(c) = char_iter.peek() {
+                    match c {
+                        '"' => break,
+                        _ => value.push(char_iter.next().unwrap())
+                    }
+                }
+
+                tokens.push(Token::String(value));
+                char_iter.next().unwrap();
+            },
             '\n' => tokens.push(Token::NEWLINE),
             _ => panic!(format!("Unknown character: {}", c)),
         }
     }
 
     tokens
+}
+
+pub fn keyword_to_token(keyword: &str) -> Option<Token> {
+    match keyword {
+        _ => None
+    }
 }
 
 #[cfg(test)]
@@ -142,5 +176,12 @@ mod tests {
         let tokens = get_tokens("!=");
         assert_eq!(tokens.len(), 1);
         assert_eq!(tokens[0], Token::NOTEQ);
+    }
+
+    #[test]
+    fn detect_string() {
+        let tokens = get_tokens("\"hello\"");
+        assert_eq!(tokens.len(), 1);
+        assert_eq!(tokens[0], Token::String("hello".to_string()));
     }
 }
