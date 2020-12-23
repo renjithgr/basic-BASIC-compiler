@@ -73,4 +73,74 @@ mod tests {
         assert_eq!(tokens.len(), 1);
         assert_eq!(tokens[0], Token::PLUS);
     }
+
+    #[test]
+    fn detect_minus() {
+        let tokens = get_tokens("-");
+        assert_eq!(tokens.len(), 1);
+        assert_eq!(tokens[0], Token::MINUS);
+    }
+
+    #[test]
+    fn detect_slash() {
+        let tokens = get_tokens("/");
+        assert_eq!(tokens.len(), 1);
+        assert_eq!(tokens[0], Token::SLASH);
+    }
+
+    #[test]
+    fn detect_asterisk() {
+        let tokens = get_tokens("*");
+        assert_eq!(tokens.len(), 1);
+        assert_eq!(tokens[0], Token::ASTERISK);
+    }
+
+    #[test]
+    fn detect_greater_than() {
+        let tokens = get_tokens(">");
+        assert_eq!(tokens.len(), 1);
+        assert_eq!(tokens[0], Token::GT);
+    }
+
+    #[test]
+    fn detect_greater_than_or_equal_to() {
+        let tokens = get_tokens(">=");
+        assert_eq!(tokens.len(), 1);
+        assert_eq!(tokens[0], Token::GTEQ);
+    }
+
+    #[test]
+    fn detect_less_than() {
+        let tokens = get_tokens("<");
+        assert_eq!(tokens.len(), 1);
+        assert_eq!(tokens[0], Token::LT);
+    }
+
+    #[test]
+    fn detect_less_than_or_equal_to() {
+        let tokens = get_tokens("<=");
+        assert_eq!(tokens.len(), 1);
+        assert_eq!(tokens[0], Token::LTEQ);
+    }
+
+    #[test]
+    fn detect_equal_to() {
+        let tokens = get_tokens("=");
+        assert_eq!(tokens.len(), 1);
+        assert_eq!(tokens[0], Token::EQ);
+    }
+
+    #[test]
+    fn detect_equal_to_equal_to() {
+        let tokens = get_tokens("==");
+        assert_eq!(tokens.len(), 1);
+        assert_eq!(tokens[0], Token::EQEQ);
+    }
+
+    #[test]
+    fn detect_not_equal_to() {
+        let tokens = get_tokens("!=");
+        assert_eq!(tokens.len(), 1);
+        assert_eq!(tokens[0], Token::NOTEQ);
+    }
 }
