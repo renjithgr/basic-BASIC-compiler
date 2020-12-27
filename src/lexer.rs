@@ -1,33 +1,4 @@
-#[derive(Debug, PartialEq)]
-pub enum Token {
-    // Operators
-    PLUS,
-    MINUS,
-    ASTERISK,
-    SLASH,
-    GT,
-    GTEQ,
-    LT,
-    LTEQ,
-    EQ,
-    EQEQ,
-    NOTEQ,
-    // Keywords
-    LABEL,
-    GOTO,
-    PRINT,
-    INPUT,
-    LET,
-    IF,
-    THEN,
-    ENDIF,
-    WHILE,
-    REPEAT,
-    ENDWHILE,
-    // Other stuff
-    String(String),
-    NEWLINE,
-}
+use crate::token::Token;
 
 fn get_tokens(input: &str) -> Vec<Token> {
     let mut tokens: Vec<Token> = vec![];
@@ -91,12 +62,6 @@ fn get_tokens(input: &str) -> Vec<Token> {
     }
 
     tokens
-}
-
-pub fn keyword_to_token(keyword: &str) -> Option<Token> {
-    match keyword {
-        _ => None
-    }
 }
 
 #[cfg(test)]
