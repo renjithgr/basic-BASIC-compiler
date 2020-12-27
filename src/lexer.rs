@@ -1,4 +1,5 @@
 use crate::token::Token;
+use crate::token::keyword_to_token;
 
 fn get_tokens(input: &str) -> Vec<Token> {
     let mut tokens: Vec<Token> = vec![];
@@ -57,7 +58,27 @@ fn get_tokens(input: &str) -> Vec<Token> {
                 tokens.push(Token::String(value));
             },
             '\n' => tokens.push(Token::NEWLINE),
-            _ => panic!(format!("Unknown character: {}", c)),
+
+            c if c.is_alphabetic() => {
+                let mut value = String::new();
+                value.push(c);
+                
+                while let Some(c) = char_iter.peek() {
+                    if c.is_alphabetic() {
+                        value.push(char_iter.next().unwrap());
+                    } else {
+                        break;
+                    }
+                }
+                println!("{}", value);
+                let keyword = keyword_to_token(&value);
+                match keyword {
+                    Some(k) => tokens.push(k),
+                    None => panic!("Unknown keyword {}")
+                }
+            },
+
+            _ => panic!("Unknown character {}", c),
         }
     }
 
@@ -157,5 +178,14 @@ mod tests {
         let tokens = get_tokens("\"\"");
         assert_eq!(tokens.len(), 1);
         assert_eq!(tokens[0], Token::String("".to_string()));
+    }
+
+    #[test]
+    fn detect_keywords() {
+        let tokens = get_tokens("LABEL GOTO PRINT");
+        assert_eq!(tokens.len(), 3);
+        assert_eq!(tokens[0], Token::LABEL);
+        assert_eq!(tokens[1], Token::GOTO);
+        assert_eq!(tokens[2], Token::PRINT);
     }
 }
