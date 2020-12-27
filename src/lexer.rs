@@ -62,7 +62,7 @@ fn get_tokens(input: &str) -> Vec<Token> {
             c if c.is_alphabetic() => {
                 let mut value = String::new();
                 value.push(c);
-                
+
                 while let Some(c) = char_iter.peek() {
                     if c.is_alphabetic() {
                         value.push(char_iter.next().unwrap());
@@ -70,7 +70,7 @@ fn get_tokens(input: &str) -> Vec<Token> {
                         break;
                     }
                 }
-                println!("{}", value);
+
                 let keyword = keyword_to_token(&value);
                 match keyword {
                     Some(k) => tokens.push(k),
