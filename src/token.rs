@@ -26,6 +26,7 @@ pub enum Token {
     ENDWHILE,
     // Other stuff
     String(String),
+    Identifier(String),
     NEWLINE,
 }
 

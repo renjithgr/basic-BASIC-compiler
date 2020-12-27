@@ -71,11 +71,9 @@ fn get_tokens(input: &str) -> Vec<Token> {
                     }
                 }
 
-                let keyword = keyword_to_token(&value);
-                match keyword {
-                    Some(k) => tokens.push(k),
-                    None => panic!("Unknown keyword {}")
-                }
+                let identifier = keyword_to_token(&value).unwrap_or_else(|| Token::Identifier(value));
+                
+                tokens.push(identifier);
             },
 
             _ => panic!("Unknown character {}", c),
@@ -187,5 +185,14 @@ mod tests {
         assert_eq!(tokens[0], Token::LABEL);
         assert_eq!(tokens[1], Token::GOTO);
         assert_eq!(tokens[2], Token::PRINT);
+    }
+
+    #[test]
+    fn detect_identifiers() {
+        let tokens = get_tokens("a b c");
+        assert_eq!(tokens.len(), 3);
+        assert_eq!(tokens[0], Token::Identifier("a".to_string()));
+        assert_eq!(tokens[1], Token::Identifier("b".to_string()));
+        assert_eq!(tokens[2], Token::Identifier("c".to_string()));
     }
 }
