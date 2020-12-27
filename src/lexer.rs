@@ -184,4 +184,11 @@ mod tests {
         assert_eq!(tokens.len(), 1);
         assert_eq!(tokens[0], Token::String("hello".to_string()));
     }
+
+    #[test]
+    fn detect_empty_string() {
+        let tokens = get_tokens("\"\"");
+        assert_eq!(tokens.len(), 1);
+        assert_eq!(tokens[0], Token::String("".to_string()));
+    }
 }
