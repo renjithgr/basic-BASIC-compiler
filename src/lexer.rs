@@ -75,13 +75,15 @@ fn get_tokens(input: &str) -> Vec<Token> {
 
                 while let Some(c) = char_iter.peek() {
                     match c {
-                        '"' => break,
+                        '"' => {
+                            char_iter.next().unwrap();
+                            break;
+                        },
                         _ => value.push(char_iter.next().unwrap())
                     }
                 }
 
                 tokens.push(Token::String(value));
-                char_iter.next().unwrap();
             },
             '\n' => tokens.push(Token::NEWLINE),
             _ => panic!(format!("Unknown character: {}", c)),
