@@ -76,6 +76,24 @@ fn get_tokens(input: &str) -> Vec<Token> {
                 tokens.push(identifier);
             },
 
+            c if c.is_digit(10) => {
+                let mut value = String::new();
+                value.push(c);
+
+                while let Some(c) = char_iter.peek() {
+                    match c {
+                        c if c.is_digit(10) => value.push(char_iter.next().unwrap()),
+                        '.' => value.push(char_iter.next().unwrap()),
+                        _ => break
+                    }
+                }
+
+                match value.contains(".") {
+                    true => tokens.push(Token::Float(value)),
+                    false => tokens.push(Token::Integer(value))
+                }
+            },
+
             _ => panic!("Unknown character {}", c),
         }
     }
@@ -195,4 +213,23 @@ mod tests {
         assert_eq!(tokens[1], Token::Identifier("b".to_string()));
         assert_eq!(tokens[2], Token::Identifier("c".to_string()));
     }
+
+    #[test]
+    fn detect_integer() {
+        let tokens = get_tokens("123 456 789");
+        assert_eq!(tokens.len(), 3);
+        assert_eq!(tokens[0], Token::Integer("123".to_string()));
+        assert_eq!(tokens[1], Token::Integer("456".to_string()));
+        assert_eq!(tokens[2], Token::Integer("789".to_string()));
+    }
+
+    #[test]
+    fn detect_float() {
+        let tokens = get_tokens("123.456 789.568");
+        assert_eq!(tokens.len(), 2);
+        assert_eq!(tokens[0], Token::Float("123.456".to_string()));
+        assert_eq!(tokens[1], Token::Float("789.568".to_string()));
+    }
+
+
 }

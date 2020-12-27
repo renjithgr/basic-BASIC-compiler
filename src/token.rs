@@ -27,6 +27,8 @@ pub enum Token {
     // Other stuff
     String(String),
     Identifier(String),
+    Integer(String),
+    Float(String),
     NEWLINE,
 }
 
