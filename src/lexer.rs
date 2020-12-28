@@ -1,7 +1,7 @@
 use crate::token::Token;
 use crate::token::keyword_to_token;
 
-fn get_tokens(input: &str) -> Vec<Token> {
+pub fn get_tokens(input: &str) -> Vec<Token> {
     let mut tokens: Vec<Token> = vec![];
 
     let mut char_iter = input.chars().peekable();
