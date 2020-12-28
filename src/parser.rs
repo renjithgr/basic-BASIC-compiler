@@ -18,18 +18,33 @@ impl Parser {
     
         while let Some(c) = iter.next() {
             match c {
-                Token::PRINT => match iter.peek() {
-                    Some(Token::String(n)) => {
-                        statements.push(Statement::Print(Expression::StringLiteral(n.to_string())));
-                        iter.next();
+                Token::PRINT => {
+                    match iter.peek() {
+                        Some(token) => match self.parse_print_statement(token) {
+                            Ok(stmt) => {
+                                statements.push(stmt);
+                                iter.next();
+                            },
+                            Err(err) => {
+                                panic!("{}", err);
+                            }
+                        },
+                        None => panic!("No token found!")
                     }
-                    _ => panic!("String value should follow PRINT keyword"),
                 },
                 _ => panic!("Unknown command!"),
             }
         }
     
         Program { statements }
+    }
+
+    fn parse_print_statement(&mut self, token: &Token) -> Result<Statement, String> {
+        if let Token::String(n) = token {
+            return Ok(Statement::Print(Expression::StringLiteral(n.to_string())))
+        } else {
+            return Err("blah".to_string())
+        }
     }
 }
 

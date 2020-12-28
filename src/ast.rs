@@ -5,12 +5,12 @@ pub struct Program {
     pub statements: Vec<Statement>,
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub enum Statement {
-    Print(Expression),
+    Print(Expression)
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub enum Expression {
     StringLiteral(String),
 }
