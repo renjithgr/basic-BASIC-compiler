@@ -3,7 +3,7 @@ use crate::ast::Program;
 use crate::ast::Statement;
 use crate::ast::Expression;
 
-fn parse_tokens(tokens: Vec<Token>) -> Program {
+pub fn parse_tokens(tokens: Vec<Token>) -> Program {
     let mut statements = vec![];
 
     let mut iter = tokens.iter().peekable();
