@@ -10,7 +10,11 @@ use crate::run::run;
 
 fn main() {
     let input = "
-        PRINT \"HELLO WORLD\"
+        PRINT \"H         D\"
+        PRINT \" E       L \"
+        PRINT \"  L     R  \"
+        PRINT \"   L   O   \"
+        PRINT \"    O W    \"
     ";
     let tokens = get_tokens(input);
     let program = parse_tokens(tokens);
