@@ -9,7 +9,9 @@ use crate::parser::parse_tokens;
 use crate::run::run;
 
 fn main() {
-    let input = "PRINT \"HELLO WORLD\"";
+    let input = "
+        PRINT \"HELLO WORLD\"
+    ";
     let tokens = get_tokens(input);
     let program = parse_tokens(tokens);
 
