@@ -7,6 +7,8 @@ pub fn run(program: Program) {
         match statement {
             Statement::Print(expression) => match expression {
                 Expression::StringLiteral(s) => println!("{}", s),
+                Expression::FloatLiteral(f) => println!("{:.2}", f),
+                Expression::IntegerLiteral(i) => println!("{}", i)
             },
         }
     }

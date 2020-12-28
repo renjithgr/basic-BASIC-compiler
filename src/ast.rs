@@ -13,6 +13,8 @@ pub enum Statement {
 #[derive(Debug, PartialEq, Clone)]
 pub enum Expression {
     StringLiteral(String),
+    FloatLiteral(f64),
+    IntegerLiteral(i64),
 }
 
 impl fmt::Display for Program {
@@ -36,6 +38,8 @@ impl fmt::Display for Expression {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
             Expression::StringLiteral(value) => write!(f, "{}", value),
+            Expression::FloatLiteral(value) => write!(f, "{}", value),
+            Expression::IntegerLiteral(value) => write!(f, "{}", value),
         }
     }
 }

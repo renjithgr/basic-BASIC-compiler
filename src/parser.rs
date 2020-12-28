@@ -6,6 +6,12 @@ pub struct Parser {
 
 }
 
+impl Default for Parser {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Parser {
     pub fn new() -> Self {
         Parser {}
@@ -40,10 +46,17 @@ impl Parser {
     }
 
     fn parse_print_statement(&mut self, token: &Token) -> Result<Statement, String> {
-        if let Token::String(n) = token {
-            return Ok(Statement::Print(Expression::StringLiteral(n.to_string())))
-        } else {
-            return Err("blah".to_string())
+        match token {
+            Token::String(n) => Ok(Statement::Print(Expression::StringLiteral(n.to_string()))),
+            Token::Float(f) => match f.parse() {
+                Ok(value) => Ok(Statement::Print(Expression::FloatLiteral(value))),
+                Err(_) => Err("blah".to_string())
+            },
+            Token::Integer(i) => match i.parse() {
+                Ok(value) => Ok(Statement::Print(Expression::IntegerLiteral(value))),
+                Err(_) => Err("blah".to_string())
+            },
+            _ => Err("blah".to_string())
         }
     }
 }
@@ -62,5 +75,29 @@ mod tests {
         let program = parser.parse_tokens(tokens);
 
         assert_eq!(program.statements.len(), 1);
+    }
+
+    #[test]
+    fn parse_print_floating_point_number() {
+        let tokens = get_tokens("PRINT 2.0");
+        let mut parser = Parser::new();
+
+        let program = parser.parse_tokens(tokens);
+        let expected = Statement::Print(Expression::FloatLiteral(2.0));
+
+        assert_eq!(program.statements.len(), 1);
+        assert_eq!(program.statements[0], expected);
+    }
+
+    #[test]
+    fn parse_print_integer_number() {
+        let tokens = get_tokens("PRINT 2");
+        let mut parser = Parser::new();
+
+        let program = parser.parse_tokens(tokens);
+        let expected = Statement::Print(Expression::IntegerLiteral(2));
+
+        assert_eq!(program.statements.len(), 1);
+        assert_eq!(program.statements[0], expected);
     }
 }

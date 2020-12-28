@@ -15,6 +15,8 @@ fn main() {
         PRINT \"  L     R  \"
         PRINT \"   L   O   \"
         PRINT \"    O W    \"
+        PRINT 2.0
+        PRINT 2
     ";
     let tokens = get_tokens(input);
     let mut parser = Parser::new();
