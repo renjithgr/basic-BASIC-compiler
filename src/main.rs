@@ -5,7 +5,7 @@ pub mod run;
 pub mod token;
 
 use crate::lexer::get_tokens;
-use crate::parser::parse_tokens;
+use crate::parser::Parser;
 use crate::run::run;
 
 fn main() {
@@ -17,7 +17,8 @@ fn main() {
         PRINT \"    O W    \"
     ";
     let tokens = get_tokens(input);
-    let program = parse_tokens(tokens);
+    let mut parser = Parser::new();
+    let program = parser.parse_tokens(tokens);
 
     run(program);
 }
