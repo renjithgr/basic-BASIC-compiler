@@ -32,7 +32,6 @@ pub enum Token {
     NEWLINE,
 }
 
-
 pub fn keyword_to_token(keyword: &str) -> Option<Token> {
     match keyword {
         "LABEL" => Some(Token::LABEL),
@@ -46,7 +45,7 @@ pub fn keyword_to_token(keyword: &str) -> Option<Token> {
         "WHILE" => Some(Token::WHILE),
         "REPEAT" => Some(Token::REPEAT),
         "ENDWHILE" => Some(Token::ENDWHILE),
-        _ => None
+        _ => None,
     }
 }
 

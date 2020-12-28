@@ -1,7 +1,7 @@
-use crate::token::Token;
+use crate::ast::Expression;
 use crate::ast::Program;
 use crate::ast::Statement;
-use crate::ast::Expression;
+use crate::token::Token;
 
 pub fn parse_tokens(tokens: Vec<Token>) -> Program {
     let mut statements = vec![];
@@ -14,22 +14,20 @@ pub fn parse_tokens(tokens: Vec<Token>) -> Program {
                 Some(Token::String(n)) => {
                     statements.push(Statement::Print(Expression::StringLiteral(n.to_string())));
                     iter.next();
-                },
-                _ => panic!("String value should follow PRINT keyword")
+                }
+                _ => panic!("String value should follow PRINT keyword"),
             },
-            _ => panic!("Unknown command! {}")
+            _ => panic!("Unknown command!"),
         }
     }
 
-    return Program {
-        statements
-    }
+    Program { statements }
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::lexer::get_tokens;
     use super::*;
+    use crate::lexer::get_tokens;
 
     #[test]
     fn parse_print_statement() {

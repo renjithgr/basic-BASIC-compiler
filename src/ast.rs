@@ -2,17 +2,17 @@ use std::fmt;
 
 #[derive(Debug, PartialEq)]
 pub struct Program {
-    pub statements: Vec<Statement>
+    pub statements: Vec<Statement>,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum Statement {
-    Print(Expression)
+    Print(Expression),
 }
 
 #[derive(Debug, PartialEq)]
 pub enum Expression {
-    StringLiteral(String)
+    StringLiteral(String),
 }
 
 impl fmt::Display for Program {
@@ -27,7 +27,7 @@ impl fmt::Display for Program {
 impl fmt::Display for Statement {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Statement::Print(ident) => write!(f, "PRINT {}\n", ident)
+            Statement::Print(ident) => writeln!(f, "PRINT {}", ident),
         }
     }
 }
@@ -35,7 +35,7 @@ impl fmt::Display for Statement {
 impl fmt::Display for Expression {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Expression::StringLiteral(value) => write!(f, "{}", value)
+            Expression::StringLiteral(value) => write!(f, "{}", value),
         }
     }
 }

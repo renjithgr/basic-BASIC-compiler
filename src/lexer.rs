@@ -1,5 +1,5 @@
-use crate::token::Token;
 use crate::token::keyword_to_token;
+use crate::token::Token;
 
 pub fn get_tokens(input: &str) -> Vec<Token> {
     let mut tokens: Vec<Token> = vec![];
@@ -50,13 +50,13 @@ pub fn get_tokens(input: &str) -> Vec<Token> {
                         '"' => {
                             char_iter.next().unwrap();
                             break;
-                        },
-                        _ => value.push(char_iter.next().unwrap())
+                        }
+                        _ => value.push(char_iter.next().unwrap()),
                     }
                 }
 
                 tokens.push(Token::String(value));
-            },
+            }
             '\n' => tokens.push(Token::NEWLINE),
 
             c if c.is_alphabetic() => {
@@ -71,10 +71,10 @@ pub fn get_tokens(input: &str) -> Vec<Token> {
                     }
                 }
 
-                let identifier = keyword_to_token(&value).unwrap_or_else(|| Token::Identifier(value));
-                
+                let identifier = keyword_to_token(&value).unwrap_or(Token::Identifier(value));
+
                 tokens.push(identifier);
-            },
+            }
 
             c if c.is_digit(10) => {
                 let mut value = String::new();
@@ -84,15 +84,15 @@ pub fn get_tokens(input: &str) -> Vec<Token> {
                     match c {
                         c if c.is_digit(10) => value.push(char_iter.next().unwrap()),
                         '.' => value.push(char_iter.next().unwrap()),
-                        _ => break
+                        _ => break,
                     }
                 }
 
-                match value.contains(".") {
+                match value.contains('.') {
                     true => tokens.push(Token::Float(value)),
-                    false => tokens.push(Token::Integer(value))
+                    false => tokens.push(Token::Integer(value)),
                 }
-            },
+            }
 
             _ => panic!("Unknown character {}", c),
         }
@@ -230,6 +230,4 @@ mod tests {
         assert_eq!(tokens[0], Token::Float("123.456".to_string()));
         assert_eq!(tokens[1], Token::Float("789.568".to_string()));
     }
-
-
 }

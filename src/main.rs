@@ -1,8 +1,8 @@
-pub mod lexer;
-pub mod token;
-pub mod parser;
 pub mod ast;
+pub mod lexer;
+pub mod parser;
 pub mod run;
+pub mod token;
 
 use crate::lexer::get_tokens;
 use crate::parser::parse_tokens;
